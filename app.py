@@ -49,7 +49,7 @@ if "history" not in st.session_state:
 st.subheader("Make a guess")
 
 st.info(
-    f"Guess a number between {low} and {high}. Attempts left: {attempt_limit - st.session_state.attempts + 1}"
+    f"Guess a number between {low} and {high}. Attempts left: {attempt_limit - st.session_state.attempts}"
 )
 
 with st.expander("Developer Debug Info"):
@@ -114,7 +114,7 @@ if submit:
         else:
             secret = st.session_state.secret
 
-        outcome, message = check_guess(guess_int, secret)
+        outcome, message = check_guess(guess_int, secret, low, high)
 
         if show_hint:
             st.warning(message)
@@ -134,7 +134,7 @@ if submit:
                 f"Final score: {st.session_state.score}"
             )
         else:
-            if st.session_state.attempts >= attempt_limit:
+            if st.session_state.attempts > attempt_limit:
                 st.session_state.status = "lost"
                 st.error(
                     f"Out of attempts! "

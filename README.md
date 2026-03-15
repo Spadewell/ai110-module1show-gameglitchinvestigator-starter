@@ -26,12 +26,35 @@ It wrote the code, ran away, and now the game is unplayable.
 ## 📝 Document Your Experience
 
 - [ ] Describe the game's purpose.
+:- The game's purpose was to find and fix the bugs in place, using suggestions from AI tools like Copilot Agent, ChatGPT, etc.
+
 - [ ] Detail which bugs you found.
+"""
+:- The difficulties are also buggy as the number of attempts aren't consistent with the difficulty level, For example; Easy was 5, Normal was 7 and Hard was 4.
+
+:- The game accepted inputs outside the described limits, and the "Range/Attempts allowed description" under the difficulty bar don't match the actual guesses and allowed attempts left.
+
+:- Attempts were counting down incorrectly as when a user had 1 attempt left out of 10 for example, it showed the "Out of attempts" message.
+
+"""
+
 - [ ] Explain what fixes you applied.
+"""
+:- Modified the attempt_limit_map variable to correctly represent the attempt limits for each difficulty level
+
+:- Modified the check_guess function to also display the correct error message in the case the user inputs an out-of-bounds guess
+
+:- Attempts were counting down incorrectly in the UI because somewhere in app.py, we had `if st.session_state.attempts >= attempt_limit:` when instead, it should have been `if st.session_state.attempts > attempt_limit:`, with the difference being the `>` symbol
+"""
 
 ## 📸 Demo
 
 - [ ] [Insert a screenshot of your fixed, winning game here]
+"""
+
+![alt text](Working_DEMO.jpg)
+
+"""
 
 ## 🚀 Stretch Features
 

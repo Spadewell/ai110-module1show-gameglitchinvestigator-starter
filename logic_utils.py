@@ -41,11 +41,14 @@ def parse_guess(raw: str):
     return True, value, None
 
 
-def check_guess(guess, secret):
+def check_guess(guess, secret, low, high):
     if guess == secret:
         return "Win", "🎉 Correct!"
 
     try:
+        if guess > high or guess < low:
+            return "Incorrect", "Your guess is out of bounds for the chosen difficulty."
+
         if guess > secret:
             return "Too High", "📉 Go LOWER!"
         else:

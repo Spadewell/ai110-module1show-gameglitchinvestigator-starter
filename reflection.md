@@ -12,12 +12,11 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 
 - The difficulties are also buggy as the number of attempts aren't consistent with the difficulty level, For example; Easy was 5, Normal was 7 and Hard was 4.
 
-- The "New Game" button doesn't start a new game once its clicked, you have to refresh the app
-
-
 - The game accepted inputs outside the described limits, and the "Range/Attempts allowed description" under the difficulty bar don't match the actual guesses and allowed attempts left.
 
-- The number of guesses didn't reset, so new games weren't possible without restarting the app 
+- Attempts were counting down incorrectly as when a user had 1 attempt left out of 10 for example, it showed the "Out of attempts" message.
+
+- The "New Game" button doesn't start a new game once its clicked, you have to refresh the app, and the guesses don't refresh as well
 
 --- 
 

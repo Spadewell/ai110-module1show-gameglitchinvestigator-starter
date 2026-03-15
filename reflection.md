@@ -50,8 +50,13 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 ## 4. What did you learn about Streamlit and state?
 
 - In your own words, explain why the secret number kept changing in the original app.
+:- It's because we weren't using streamlit's session state to store the secret numbers, they were originally just random standalone integers, hence why it refreshed everytime the user submits.
+
 - How would you explain Streamlit "reruns" and session state to a friend who has never used Streamlit?
+:- I would say: I think of reruns in the same way you refresh a website, and session state is kind of a 'container' in a sense that you can use to store special values you want across each website refresh, so you don't lose any important info that you might have filled out on the website somewhere before you refreshed it.
+
 - What change did you make that finally gave the game a stable secret number?
+:- Used session state to store the secret number
 
 ---
 

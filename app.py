@@ -72,7 +72,6 @@ with col2:
 with col3:
     show_hint = st.checkbox("Show hint", value=True)
 
-# FIXME: Game restarting logic breaks here, the game doesn't restart when the button is clicked
 if new_game:
     st.session_state.attempts = 0
     low, high = get_range_for_difficulty(difficulty)  # Get the correct range
@@ -109,12 +108,7 @@ if submit:
     else:
         st.session_state.history.append(guess_int)
 
-        if st.session_state.attempts % 2 == 0:
-            secret = str(st.session_state.secret)
-        else:
-            secret = st.session_state.secret
-
-        outcome, message = check_guess(guess_int, secret, low, high)
+        outcome, message = check_guess(guess_int, st.session_state.secret, low, high)
 
         if show_hint:
             st.warning(message)

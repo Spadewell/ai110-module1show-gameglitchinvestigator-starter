@@ -1,45 +1,13 @@
 import random
 import streamlit as st
 
-from logic_utils import get_range_for_difficulty # Refactored difficulty logic into logic_utils using Copilot Agent mode
-
-def parse_guess(raw: str):
-    if raw is None:
-        return False, None, "Enter a guess."
-
-    if raw == "":
-        return False, None, "Enter a guess."
-
-    try:
-        if "." in raw:
-            value = int(float(raw))
-        else:
-            value = int(raw)
-    except Exception:
-        return False, None, "That is not a number."
-
-    return True, value, None
-
-
-def check_guess(guess, secret):
-    if guess == secret:
-        return "Win", "🎉 Correct!"
-    
-    try:
-        if guess > secret:
-            return "Too High", "📉 Go LOWER!"
-        else:
-            return "Too Low", "📈 Go HIGHER!"
-    except TypeError:
-        g = str(guess)
-        if g == secret:
-            return "Win", "🎉 Correct!"
-        if g > secret:
-            return "Too High", "📉 Go LOWER!"
-        return "Too Low", "📈 Go HIGHER!"
-
-
-from logic_utils import update_score
+from logic_utils import (
+    get_attempt_limit,
+    get_range_for_difficulty,
+    parse_guess,
+    check_guess,
+    update_score,
+)
 
 st.set_page_config(page_title="Glitchy Guesser", page_icon="🎮")
 
@@ -53,14 +21,7 @@ difficulty = st.sidebar.selectbox(
     ["Easy", "Normal", "Hard"],
     index=0,
 )
-
-# Used Copilot to fix attempts/difficulty logic here
-attempt_limit_map = {
-    "Easy": 10,    # Increased from 6 to give more attempts for easier difficulty
-    "Normal": 7,   # Reduced from 8 to be middle ground
-    "Hard": 5,     # Keep as-is (least attempts for hardest difficulty)
-}
-attempt_limit = attempt_limit_map[difficulty]
+attempt_limit = get_attempt_limit(difficulty)
 
 low, high = get_range_for_difficulty(difficulty)
 
@@ -88,8 +49,7 @@ if "history" not in st.session_state:
 st.subheader("Make a guess")
 
 st.info(
-    f"Guess a number between {low} and {high}."
-    f"Attempts left: {attempt_limit - st.session_state.attempts + 1}"
+    f"Guess a number between {low} and {high}. Attempts left: {attempt_limit - st.session_state.attempts + 1}"
 )
 
 with st.expander("Developer Debug Info"):

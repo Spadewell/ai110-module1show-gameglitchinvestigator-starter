@@ -1,3 +1,13 @@
+attempt_limit_map = {
+    "Easy": 10,    # More attempts for easier difficulty
+    "Normal": 7,   # Middle ground
+    "Hard": 5,     # Fewest attempts for hardest difficulty
+}
+
+def get_attempt_limit(difficulty: str) -> int:
+    return attempt_limit_map.get(difficulty, 10)
+
+
 def get_range_for_difficulty(difficulty: str):
     if difficulty == "Easy":
         return 1, 25  # Slightly wider than 1-20 for more "easy" feel, but still small
@@ -14,16 +24,39 @@ def parse_guess(raw: str):
 
     Returns: (ok: bool, guess_int: int | None, error_message: str | None)
     """
-    raise NotImplementedError("Refactor this function from app.py into logic_utils.py")
+    if raw is None:
+        return False, None, "Enter a guess."
+
+    if raw == "":
+        return False, None, "Enter a guess."
+
+    try:
+        if "." in raw:
+            value = int(float(raw))
+        else:
+            value = int(raw)
+    except Exception:
+        return False, None, "That is not a number."
+
+    return True, value, None
 
 
 def check_guess(guess, secret):
-    """
-    Compare guess to secret and return (outcome, message).
+    if guess == secret:
+        return "Win", "🎉 Correct!"
 
-    outcome examples: "Win", "Too High", "Too Low"
-    """
-    raise NotImplementedError("Refactor this function from app.py into logic_utils.py")
+    try:
+        if guess > secret:
+            return "Too High", "📉 Go LOWER!"
+        else:
+            return "Too Low", "📈 Go HIGHER!"
+    except TypeError:
+        g = str(guess)
+        if g == secret:
+            return "Win", "🎉 Correct!"
+        if g > secret:
+            return "Too High", "📉 Go LOWER!"
+        return "Too Low", "📈 Go HIGHER!"
 
 
 def update_score(current_score: int, outcome: str, attempt_number: int, difficulty: str = "Normal"):
